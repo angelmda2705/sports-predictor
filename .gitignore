@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ML / datos / artefactos (NUNCA versionar datasets ni modelos en git)
+mlruns/
+mlartifacts/
+data/raw/
+data/processed/
+db/snapshots/        # snapshots de ingesta (generados, reproducibles)
+db/*.db              # base de datos SQLite local (generada)
+*.pkl
+*.joblib
+*.parquet
+
+# Secretos
+*.pem
+*.key
+secrets/
+
+# OS / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Bases de datos locales
+*.db
+*.sqlite
+*.sqlite3

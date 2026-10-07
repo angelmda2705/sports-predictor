@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sports-predictor-ml"
+version = "0.1.0"
+description = "Núcleo de ciencia de datos: ingesta, features point-in-time, modelos baseline y evaluación temporal."
+requires-python = ">=3.12"
+# El NÚCLEO (Elo, leakage guard, predictor baseline, mock provider) es Python puro,
+# SIN dependencias externas. Así se puede instalar liviano en apps/api y correr las
+# pruebas con `python -m unittest`. Las dependencias del pipeline son opcionales.
+dependencies = []
+
+[project.optional-dependencies]
+pipeline = [
+    "pandas>=2.2",
+    "numpy>=2.0",
+    "scikit-learn>=1.5",
+    "scipy>=1.13",
+]
+models = [
+    "xgboost>=2.1",
+    "lightgbm>=4.5",
+    "catboost>=1.2",
+    "optuna>=4.0",
+    "shap>=0.46",
+    "mlflow>=2.16",
+]
+dev = [
+    "pytest>=8.3",
+    "pytest-cov>=5.0",
+    "ruff>=0.6",
+    "mypy>=1.11",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sports_predictor_ml"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

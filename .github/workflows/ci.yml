@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ml:
+    name: packages/ml (lint + type + test)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/ml
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Lint (ruff)
+        run: ruff check .
+      - name: Type check (mypy)
+        run: mypy src
+      - name: Tests
+        run: pytest -q --maxfail=1
+
+  ml-stdlib-smoke:
+    name: packages/ml (smoke sin dependencias)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/ml
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Smoke tests (stdlib unittest, sin pip install)
+        run: python -m unittest discover -s tests -p "test_*.py" -v
+
+  web:
+    name: apps/web (lint + build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: echo "Placeholder — se habilita cuando apps/web tenga package.json (Fase 1)."
